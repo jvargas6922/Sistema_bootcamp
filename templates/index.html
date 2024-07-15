@@ -1,0 +1,14 @@
+{% extends "./layouts/base.html" %}
+{% block title  %}
+    PCN-Bootcamp
+{% endblock  %}
+
+{% block content  %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <h1 class="display-4">Plataforma para el control de notas</h1>
+            <p class="lead">Sistema para llevar las notas de estudiantes bootcamp.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary">Ingresar</a>
+        </div>
+    </div>
+{% endblock  %}

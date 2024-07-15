@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+    <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>{% block title %}{% endblock  %}</title>
+            {% include "./partials/css.html" %}
+            <!--<link rel="stylesheet" href="{% static 'static/css/style.css' %}">-->
+            {% block css %}{% endblock %}
+        </head>
+        <body>
+            {% include "./partials/navbar.html" %}
+            <main>
+                {% block content %}{% endblock  %}
+            </main>
+            <footer class="text-center fixed-bottom">
+                <p>&copy; 2024 - All rights reserved Bootcamp_system</p>
+            </footer>
+            {% include "./partials/script.html" %}
+            {% block js %}{% endblock  %}
+        </body>
+    </html>

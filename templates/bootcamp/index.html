@@ -1,0 +1,110 @@
+{% extends "../layouts/base_admin.html" %}
+{% block title  %}
+    PCN-Bootcamp | Bootcamp
+{% endblock  %}
+{% block content  %}
+    <div class="container-fluid">
+        <div class="row col-md-8 mt-3">
+            <div class="col-md-6">
+                <h3>Listado Bootcamp</h3>
+            </div>
+            <div class="col-md-6">
+                <a href="#"
+                   class="btn btn-success"
+                   data-toggle="modal"
+                   data-target="#exampleModal">
+                    Crear
+                </a>
+            </div>
+        </div>
+
+        <table id="table_bootcamp" class="table table-striped">
+            <thead class="">
+              <tr>
+                <th scope="col">Bootcamp</th>
+                <th scope="col">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for bootcamp in bootcamps  %}
+                    <tr>
+                        <td>{{ bootcamp }}</td>
+                        <td>
+                            <a href="#" class="btn btn-primary">Editar</a>
+                            <a href="#" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Modal create -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Crear bootcamp</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-row">
+                                <div class="col">
+                                    <input type="text" class="form-control" id="id_bootcamp" placeholder="Bootcamp">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
+                        <button type="button" class="btn btn-primary" id="createBootcamp">crear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal create -->
+    </div>
+{% endblock  %}
+{% block js %}
+    <script>
+        $(document).ready(function() {
+            $('#table_bootcamp').DataTable();
+
+            $('#createBootcamp').click(function()
+            {
+              let bootcamp = $('#id_bootcamp').val();
+              if(bootcamp === ""){
+                Swal.fire({
+                    icon: "warning",
+                    title: "Complete los campos"
+                });
+                return
+              }
+
+              axios.post('{% url "create_bootcamp" %}', {
+                    bootcamp:bootcamp
+                }, {
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(function(response) {
+                    let message = response.data.message
+                    $('#exampleModal').modal('hide');
+                    Swal.fire({
+                        icon: "success",
+                        title:message
+                    });
+
+                    //location.reload();
+                })
+                .catch(function(error) {
+                    console.error('Error al crear el bootcamp:', error);
+                });
+            });
+        });
+    </script>
+{% endblock %}

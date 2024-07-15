@@ -1,0 +1,44 @@
+{% extends "../layouts/base_admin.html" %}
+{% block title  %}
+    PCN-Bootcamp | Modulos
+{% endblock  %}
+{% block content  %}
+    <div class="container-fluid">
+        <div class="row col-md-8 mt-3">
+            <div class="col-md-4">
+                <h3>Listado Modulos</h3>
+            </div>
+            <div class="colr">
+                <a href="#" class="btn btn-success">crear</a>
+            </div>
+        </div>
+        <table id="table_module" class="table table-striped">
+            <thead class="">
+              <tr>
+                  <th scope="col">Bootcamp</th>
+                  <th scope="col">Modulo</th>
+                  <th scope="col">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for module in modules  %}
+                    <tr>
+                        <td>{{ module.id_bootcamp.bootcamp }}</td>
+                        <td>{{ module.module }}</td>
+                        <td>
+                            <a href="#" class="btn btn-primary">Editar</a>
+                            <a href="#" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock  %}
+{% block js %}
+    <script>
+        $(document).ready(function() {
+            $('#table_module').DataTable();
+        });
+    </script>
+{% endblock %}
